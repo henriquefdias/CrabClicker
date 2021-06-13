@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -11,12 +13,22 @@ public class Game extends Canvas implements Runnable {
 	public static int WIDTH = 480;
 	public static int HEIGHT = 480;
 	
+	public static List<Crab> crabs;
+	public Spawner spawner;
+	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		
+		crabs = new ArrayList<>();
+		spawner = new Spawner();
+		
 	}
 	
 	public void update() {
-		
+		spawner.update();
+		for (int i = 0; i < crabs.size(); i++) {
+			crabs.get(i).update();
+		}
 	}
 	
 	public void render() {
@@ -28,6 +40,11 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(new Color(255, 229, 102));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.BLACK);
+		g.fillOval(WIDTH/2 - 35, HEIGHT/2 - 35, 70, 70);
+		for (int i = 0; i < crabs.size(); i++) {
+			crabs.get(i).render(g);
+		}
 		g.dispose();
 		bs.show();
 		

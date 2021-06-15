@@ -2,6 +2,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,17 @@ public class Game extends Canvas implements Runnable {
 	
 	public static List<Crab> crabs;
 	public Spawner spawner;
+	public static Spritesheet spritesheet;
+	
+	public static Rectangle maskHole;
 	
 	public Game() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		
+		spritesheet = new Spritesheet("/spritesheet.png");
 		crabs = new ArrayList<>();
 		spawner = new Spawner();
 		
+		maskHole = new Rectangle(WIDTH/2 - 20, HEIGHT/2 - 20, 40, 40);
 	}
 	
 	public void update() {
@@ -41,7 +46,7 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(new Color(255, 229, 102));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.BLACK);
-		g.fillOval(WIDTH/2 - 35, HEIGHT/2 - 35, 70, 70);
+		g.fillOval(WIDTH/2 - 20, HEIGHT/2 - 20, 40, 40);
 		for (int i = 0; i < crabs.size(); i++) {
 			crabs.get(i).render(g);
 		}
